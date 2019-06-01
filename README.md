@@ -7,9 +7,15 @@ Evopricing car rental quotes test scrapers, based on Node.js + [Puppeteer](https
 
 ## Installation
 
-Use the package manager [npm](https://www.npmjs.com/) to install Node.js modules dependencies
+1. Clone this repository on your machine
+```bash
+git clone https://github.com/xprudhomme/evopricing.git
+```
+
+2. Use the package manager [npm](https://www.npmjs.com/) to install Node.js modules dependencies
 
 ```bash
+cd evopricing/
 npm i
 ```
 
