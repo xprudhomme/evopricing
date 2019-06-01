@@ -1,0 +1,34 @@
+{
+  "name": "avis.co.uk",
+  "version": "1.0.0",
+  "description": "Headless scraper for Avis cars rental website",
+  "main": "tests/test-fetch-data.sh",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "tests/test-fetch-data.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/xprudhomme/evopricing.git"
+  },
+  "keywords": [
+    "evopricing",
+    "evo",
+    "avis",
+    "cars",
+    "rental"
+  ],
+  "author": "Xavier Prud'homme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xprudhomme/evopricing/issues"
+  },
+  "homepage": "https://github.com/xprudhomme/evopricing#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "puppeteer": "^1.17.0"
+  }
+}
