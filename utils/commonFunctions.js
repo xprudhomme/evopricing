@@ -229,7 +229,7 @@ const getCliParams = () => {
     };
 };
 
-const getOutputFiles = (output, urlName) => {
+const getOutputFiles = (output, urlName, duration=1) => {
 
     /*******************************************************************
      * OUTPUT files definition and project-wide variables
@@ -240,9 +240,9 @@ const getOutputFiles = (output, urlName) => {
     const month = zeroPad(currentTime.getMonth() + 1, 2);
     const day = zeroPad(currentTime.getDate(), 2 );
     const year = currentTime.getFullYear();
-    const outputFile = `${output}/${urlName}-${year}-${month}-${day}.json`;
-    const errorFile = `${output}/${urlName}/errors-${year}-${month}-${day}.json`;
-    const outputImage = `${output}/${urlName}-${year}-${month}-${day}.png`;
+    const outputFile = `${output}/${urlName}-${year}-${month}-${day}-duration-${duration}.json`;
+    const errorFile = `${output}/${urlName}/errors-${year}-${month}-${day}-duration-${duration}.json`;
+    const outputImage = `${output}/${urlName}-${year}-${month}-${day}-duration-${duration}.png`;
     return {
         outputFile,
         errorFile,
@@ -251,38 +251,6 @@ const getOutputFiles = (output, urlName) => {
 }
 
 
-
-/*******************************************************************
- * RETRY function
- * Provides an example of "retry" logic.
- * It passes, via extraParams, a "retried" value, which is incremented
- * at every retry.
- * If the value is less than 4, the page is usually not available
- * or the scraping logic needs to be adjusted (i.e. higher latency
- * and timeouts are triggered)
- *******************************************************************/
-
-const retry = (baseURL, extraParams, errorFile) => {
-
-    if (extraParams.retried >= 4) {
-        writeToFile([{ url, extraParams }], errorFile);
-        return extraParams.retried;
-    }
-    
-    extraParams.retried++;
-
-    enqueueURL({
-        taskName, 
-        uid, 
-        urlName, 
-        scrapngoServer,
-        fast: false,
-        infiniteRetry: false,
-        urls: [ baseURL + '{' + JSON.stringify(extraParams) + '}']
-    });
-
-    return extraParams.retried;
-};
 
 
 
@@ -324,7 +292,6 @@ module.exports = {
     getDateAsString,
     getOutputFiles,
     parseURL,
-    retry,
     writeJSONToFile,
     writeToFile,
 };
