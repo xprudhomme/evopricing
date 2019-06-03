@@ -56,6 +56,12 @@ if ('days' in extraParams) {
 console.log(` >>>>> Days are: ${JSON.stringify(meta.days)}`);
 
 
+if ('start_in' in extraParams) {
+    meta.start_in = extraParams.start_in;
+} 
+console.log(` >>>>> Start in: ${meta.start_in}`);
+
+
 
 function getLocationURL (inputLocation, locationAddress, startDate) {
 
