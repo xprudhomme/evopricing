@@ -2,11 +2,11 @@ const puppeteer = require('puppeteer');
 const {
     initFolder,
     initPageConsole,
-    enqueueURL, 
+    enqueueURL,
+    writeToFile,
     writeJSONToFile,
     getOutputFiles,
     getCliParams,
-    retry,
 } = require("../utils/commonFunctions");
 
 
@@ -27,7 +27,7 @@ const {
 } = getCliParams();
 
 const {startDate, endDate, inputLocation, locationAddress, days} = extraParams;
-const {outputFile, errorFile, outputImage} = getOutputFiles(output, urlName);
+const {outputFile, errorFile, outputImage} = getOutputFiles(output, urlName, days);
 
 
 // Meta declaration
@@ -78,7 +78,7 @@ async function fillSearchForm(page) {
     
     // Click on the Pick-up date button
     await page.click("#pick-up-date-button");
-    console.log(` Just clcked on the Pick-up date button !`);
+    console.log(` Just clicked on the Pick-up date button !`);
 
     await page.waitFor("section#set-pick-up-date.is-open");
     await page.waitFor(pickupDateXPath);
@@ -94,7 +94,7 @@ async function fillSearchForm(page) {
 
     // Click on the Drop-off date button
     await page.click("#drop-off-date-button");
-    console.log(` Just clcked on the Drop-off date button !`);
+    console.log(` Just clicked on the Drop-off date button !`);
 
     await page.waitFor("section#set-drop-off-date.is-open");
     await page.waitFor(dropOffDateXPath);
@@ -193,6 +193,40 @@ async function initBrowser(options={}) {
 
     return {browser, page};
 }
+
+
+/*******************************************************************
+ * RETRY function
+ * Provides an example of "retry" logic.
+ * It passes, via extraParams, a "retried" value, which is incremented
+ * at every retry.
+ * If the value is less than 4, the page is usually not available
+ * or the scraping logic needs to be adjusted (i.e. higher latency
+ * and timeouts are triggered)
+ *******************************************************************/
+
+const retry = (baseURL, extraParams, errorFile) => {
+
+    if (extraParams.retried >= 4) {
+        writeToFile([{ url, extraParams }], errorFile);
+        return extraParams.retried;
+    }
+    
+    extraParams.retried++;
+
+    enqueueURL({
+        taskName, 
+        uid, 
+        urlName, 
+        scrapngoServer,
+        fast: false,
+        infiniteRetry: false,
+        urls: [ baseURL + '{' + JSON.stringify(extraParams) + '}']
+    });
+
+    return extraParams.retried;
+};
+
 
 /*******************************************************************
  * Web scraping START
