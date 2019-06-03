@@ -26,9 +26,7 @@ const {
 
 // const {errorFile} = getOutputFiles(output, urlName);
 
-
 const isTest = false;
-
 
 const meta = {
     run_id: "000",
@@ -114,10 +112,6 @@ function getURLsFromAgenciesAndDays({agencies, ...meta}) {
 *******************************************************************/
 (async function test() {
 
-    // await initFolder(output);
-
-    //const urls = getLocationURLs(meta);
-    const urls = getURLsFromAgenciesAndDays(meta);
-    // console.dir(urls);
+    const urls = getURLsFromAgenciesAndDays(meta);  // console.dir(urls);
     await enqueueURL({taskName, uid, urlName, urls, scrapngoServer, isTest});
 })();
