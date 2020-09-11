@@ -28,7 +28,7 @@
   "homepage": "https://github.com/xprudhomme/evopricing#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "puppeteer": "^1.17.0"
   }
 }
